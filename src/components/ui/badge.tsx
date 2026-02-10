@@ -6,11 +6,11 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles = {
-    cold: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
-    active: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-    interested: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-    qualified: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
-    dead: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+    cold: "bg-muted text-muted-foreground border border-border",
+    active: "bg-primary/10 text-primary border border-primary/20",
+    interested: "bg-success/10 text-success border border-success/20",
+    qualified: "bg-cyan/10 text-cyan border border-cyan/20",
+    dead: "bg-destructive/10 text-destructive border border-destructive/20",
 };
 
 export function Badge({ className, variant = "cold", ...props }: BadgeProps) {

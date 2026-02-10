@@ -7,10 +7,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const variants = {
-    primary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
+    primary: "bg-primary text-primary-foreground hover:bg-primary-light active:bg-primary-dark shadow-subtle",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-primary/10",
+    outline: "border border-border bg-background hover:bg-muted hover:text-foreground",
+    ghost: "hover:bg-muted hover:text-foreground",
 };
 
 const sizes = {

@@ -42,6 +42,19 @@ const config: Config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                /* Custom Redesign Palette */
+                "primary-light": "hsl(var(--primary-light))",
+                "primary-dark": "hsl(var(--primary-dark))",
+                sky: "hsl(var(--sky))",
+                cyan: "hsl(var(--cyan))",
+                navy: "hsl(var(--navy))",
+                heading: "hsl(var(--heading))",
+                success: "hsl(var(--success))",
+                warning: "hsl(var(--warning))",
+            },
+            boxShadow: {
+                "blue-glow": "var(--blue-glow)",
+                "subtle": "0 1px 3px rgba(15, 23, 42, 0.1)",
             },
             borderRadius: {
                 lg: "var(--radius)",
