@@ -1,12 +1,15 @@
 import { cn } from "@/lib/utils";
+import * as React from "react";
 
-export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
+export const Card = React.memo(({ className, children }: { className?: string; children: React.ReactNode }) => {
     return (
         <div className={cn("bg-card text-card-foreground rounded-2xl p-6 border border-border shadow-subtle transition-all hover:shadow-md", className)}>
             {children}
         </div>
     );
-}
+});
+
+Card.displayName = "Card";
 
 export function StatCard({ title, value, icon: Icon, description, trend }: {
     title: string;
