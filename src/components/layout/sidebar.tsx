@@ -8,9 +8,11 @@ import {
     Users,
     Upload,
     Mail,
+    BarChart3,
+    Inbox,
+    ShieldCheck,
     Settings,
-    LogOut,
-    ChevronRight
+    LogOut
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -18,6 +20,9 @@ const NAV_ITEMS = [
     { name: "Leads", href: "/leads", icon: Users },
     { name: "Upload", href: "/upload", icon: Upload },
     { name: "Campaigns", href: "/campaigns", icon: Mail },
+    { name: "Analytics", href: "/analytics", icon: BarChart3 },
+    { name: "Inbox", href: "/inbox", icon: Inbox },
+    { name: "Deliverability", href: "/settings/deliverability", icon: ShieldCheck },
     { name: "Settings", href: "/settings", icon: Settings },
 ];
 
