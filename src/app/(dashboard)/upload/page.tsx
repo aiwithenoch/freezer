@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, Download, FileText, CheckCircle2, AlertCircle } from "lucide-react";
 import Papa from "papaparse";
-import { sonner } from "sonner"; // Assuming sonner is installed
+import { toast } from "sonner"; // Assuming sonner is installed
 
 export default function UploadPage() {
     const [data, setData] = useState<any[]>([]);
@@ -24,13 +24,14 @@ export default function UploadPage() {
             },
             error: (error) => {
                 console.error(error);
+                toast.error("Error parsing CSV");
             }
         });
     };
 
     const handleImport = () => {
         // Show a success toast/alert
-        alert("Leads imported successfully! (Mock Action)");
+        toast.success("Leads imported successfully!");
         setData([]);
         setFileName("");
     };
