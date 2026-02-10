@@ -61,16 +61,24 @@ export default function DashboardPage() {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-3">
-                <div className="glass-card col-span-2 rounded-xl p-6">
-                    <h3 className="mb-4 font-bold">Performance Overview</h3>
-                    <div className="flex h-64 flex-col items-center justify-center text-muted-foreground">
+                <Card className="col-span-2">
+                    <h3 className="mb-6 font-bold text-heading uppercase tracking-wider text-sm">Performance Overview</h3>
+                    <div className="flex h-64 flex-col items-center justify-center">
                         {/* Chart placeholder */}
-                        <div className="flex w-full items-end justify-between px-8">
+                        <div className="flex w-full items-end justify-between px-4">
                             {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
-                                <div key={i} className="w-8 bg-primary/20 hover:bg-primary transition-colors cursor-pointer rounded-t-md" style={{ height: `${h}%` }} />
+                                <div
+                                    key={i}
+                                    className="w-full mx-1 bg-primary/10 hover:bg-primary/30 transition-all cursor-pointer rounded-t-lg group relative"
+                                    style={{ height: `${h}%` }}
+                                >
+                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-heading text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        {h}% Growth
+                                    </div>
+                                </div>
                             ))}
                         </div>
-                        <div className="mt-4 flex w-full justify-between px-8 text-xs font-medium">
+                        <div className="mt-6 flex w-full justify-between px-4 text-[10px] font-bold text-muted-foreground uppercase tracking-tighter">
                             <span>Mon</span>
                             <span>Tue</span>
                             <span>Wed</span>
@@ -80,26 +88,26 @@ export default function DashboardPage() {
                             <span>Sun</span>
                         </div>
                     </div>
-                </div>
+                </Card>
 
-                <div className="glass-card rounded-xl p-6">
-                    <h3 className="mb-4 font-bold">Recent Activity</h3>
-                    <div className="space-y-4">
+                <Card>
+                    <h3 className="mb-6 font-bold text-heading uppercase tracking-wider text-sm">Recent Activity</h3>
+                    <div className="space-y-6">
                         {[
                             { text: "John Doe replied to Campaign Q1", time: "2m ago", type: "reply" },
                             { text: "50 leads imported for Website Build", time: "4h ago", type: "import" },
                             { text: "Email sequence finished for Sarah Smith", time: "1d ago", type: "finished" },
                         ].map((activity, i) => (
-                            <div key={i} className="flex gap-3 text-sm">
-                                <div className="h-2 w-2 mt-1.5 rounded-full bg-primary" />
+                            <div key={i} className="flex gap-4 text-sm group cursor-default">
+                                <div className="h-2 w-2 mt-1.5 rounded-full bg-primary shadow-blue-glow ring-4 ring-primary/5" />
                                 <div className="flex-1">
-                                    <p className="font-medium">{activity.text}</p>
-                                    <p className="text-xs text-muted-foreground">{activity.time}</p>
+                                    <p className="font-semibold text-heading group-hover:text-primary transition-colors">{activity.text}</p>
+                                    <p className="text-[10px] font-bold text-muted-foreground uppercase mt-1">{activity.time}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
+                </Card>
             </div>
         </div>
     );

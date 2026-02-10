@@ -26,16 +26,16 @@ export function Sidebar() {
 
     return (
         <div className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r bg-card/50 backdrop-blur-xl lg:flex">
-            <div className="flex h-16 items-center border-b px-6">
-                <Link href="/" className="flex items-center gap-2 font-bold text-primary">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <div className="flex h-20 items-center px-6 border-b border-border/50 bg-white/50 backdrop-blur-md">
+                <Link href="/" className="flex items-center gap-3 font-black text-heading group">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-blue-glow group-hover:scale-105 transition-transform">
                         F
                     </div>
-                    <span className="text-xl tracking-tight">FREEZER</span>
+                    <span className="text-xl tracking-tighter uppercase font-black">FREEZER</span>
                 </Link>
             </div>
 
-            <nav className="flex-1 space-y-1 px-3 py-4">
+            <nav className="flex-1 space-y-1.5 px-4 py-8">
                 {NAV_ITEMS.map((item) => {
                     const isActive = pathname.startsWith(item.href);
                     const Icon = item.icon;
@@ -45,17 +45,17 @@ export function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent/50",
+                                "group flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition-all",
                                 isActive
-                                    ? "bg-primary text-primary-foreground hover:bg-primary shadow-md"
-                                    : "text-muted-foreground"
+                                    ? "bg-primary/5 text-primary border border-primary/10 shadow-sm"
+                                    : "text-muted-foreground hover:bg-muted hover:text-heading"
                             )}
                         >
                             <div className="flex items-center gap-3">
-                                <Icon className={cn("h-5 w-5", isActive ? "text-primary-foreground" : "text-primary")} />
-                                {item.name}
+                                <Icon className={cn("h-5 w-5 transition-all", isActive ? "text-primary drop-shadow-[0_0_8px_rgba(37,99,235,0.4)]" : "text-muted-foreground group-hover:text-heading")} />
+                                <span className="tracking-tight">{item.name}</span>
                             </div>
-                            {isActive && <ChevronRight className="h-4 w-4 opacity-70" />}
+                            {isActive && <div className="h-1.5 w-1.5 rounded-full bg-primary shadow-blue-glow" />}
                         </Link>
                     );
                 })}

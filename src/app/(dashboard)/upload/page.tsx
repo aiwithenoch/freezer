@@ -44,11 +44,11 @@ export default function UploadPage() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-                <Card className="flex flex-col items-center justify-center border-2 border-dashed p-12 text-center transition-colors hover:border-primary/50">
-                    <div className="mb-4 rounded-full bg-primary/10 p-4 text-primary">
+                <Card className="flex flex-col items-center justify-center border-2 border-dashed border-primary/20 p-12 text-center transition-all hover:border-primary/50 hover:bg-primary/5 group relative overflow-hidden">
+                    <div className="mb-4 rounded-full bg-primary/10 p-4 text-primary group-hover:scale-110 transition-transform">
                         <Upload className="h-8 w-8" />
                     </div>
-                    <h3 className="mb-2 text-lg font-bold">Drag and drop your CSV</h3>
+                    <h3 className="mb-2 text-lg font-bold text-heading">Drag and drop your CSV</h3>
                     <p className="mb-6 text-sm text-muted-foreground">or click to browse from your computer</p>
                     <input
                         type="file"
@@ -56,16 +56,16 @@ export default function UploadPage() {
                         onChange={handleFileUpload}
                         className="absolute inset-0 z-10 cursor-pointer opacity-0"
                     />
-                    <Button variant="outline" className="relative z-0">Choose File</Button>
+                    <Button variant="outline" className="relative z-0 shadow-subtle group-hover:bg-primary group-hover:text-white transition-all">Choose File</Button>
                     <div className="mt-4 flex flex-col items-center gap-2">
-                        <a href="#" className="flex items-center gap-1 text-xs text-primary hover:underline">
+                        <a href="#" className="flex items-center gap-1 text-xs text-primary hover:underline font-bold">
                             <Download className="h-3 w-3" /> Download Sample CSV
                         </a>
                     </div>
                 </Card>
 
-                <Card className="p-6">
-                    <h3 className="mb-4 font-bold">Requirements</h3>
+                <Card className="p-8">
+                    <h3 className="mb-6 font-bold text-heading uppercase tracking-wider text-sm">Requirements</h3>
                     <div className="space-y-4">
                         {[
                             { col: "name", req: true, desc: "Full name of the lead" },
@@ -74,12 +74,12 @@ export default function UploadPage() {
                             { col: "campaign_type", req: true, desc: "website, outbound, etc." },
                             { col: "context", req: true, desc: "Personalization trigger text" },
                         ].map((col, i) => (
-                            <div key={i} className="flex items-start justify-between border-b pb-2 last:border-0">
+                            <div key={i} className="flex items-start justify-between border-b border-border/50 pb-3 last:border-0">
                                 <div>
-                                    <code className="text-xs font-bold text-primary">{col.col}</code>
-                                    <p className="text-xs text-muted-foreground">{col.desc}</p>
+                                    <code className="text-[10px] font-bold text-primary p-1 bg-primary/5 rounded">{col.col}</code>
+                                    <p className="text-[11px] text-muted-foreground mt-1 font-medium">{col.desc}</p>
                                 </div>
-                                {col.req && <span className="text-[10px] font-bold uppercase text-red-500">Required</span>}
+                                {col.req && <span className="text-[9px] font-bold uppercase text-destructive bg-destructive/5 px-2 py-0.5 rounded-full">Required</span>}
                             </div>
                         ))}
                     </div>
@@ -89,43 +89,40 @@ export default function UploadPage() {
             {data.length > 0 && (
                 <div className="animate-fade-in space-y-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="flex items-center gap-2 text-xl font-bold">
+                        <h2 className="flex items-center gap-2 text-xl font-bold text-heading">
                             Preview: {fileName}
                             <span className="text-sm font-normal text-muted-foreground">({data.length} leads detected)</span>
                         </h2>
-                        <Button onClick={handleImport} className="gap-2 shadow-lg">
+                        <Button onClick={handleImport} className="gap-2 shadow-blue-glow">
                             <CheckCircle2 className="h-4 w-4" /> Import {data.length} Leads
                         </Button>
                     </div>
-                    <div className="w-full overflow-x-auto rounded-xl border bg-card">
-                        <table className="w-full text-left text-sm">
-                            <thead className="bg-muted/50 border-b">
-                                <tr>
-                                    <th className="px-4 py-3 font-medium">Name</th>
-                                    <th className="px-4 py-3 font-medium">Email</th>
-                                    <th className="px-4 py-3 font-medium">Company</th>
-                                    <th className="px-4 py-3 font-medium">Campaign</th>
-                                    <th className="px-4 py-3 font-medium">Context</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {data.slice(0, 5).map((row, i) => (
-                                    <tr key={i} className="hover:bg-muted/30">
-                                        <td className="px-4 py-3">{row.name}</td>
-                                        <td className="px-4 py-3">{row.email}</td>
-                                        <td className="px-4 py-3">{row.company}</td>
-                                        <td className="px-4 py-3">{row.campaign_type}</td>
-                                        <td className="px-4 py-3 max-w-xs truncate">{row.context}</td>
+                    <Card className="p-0 overflow-hidden shadow-subtle border-border/50">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm">
+                                <thead className="bg-muted/30 border-b border-border/50">
+                                    <tr>
+                                        <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Name</th>
+                                        <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Email</th>
+                                        <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Company</th>
+                                        <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Campaign</th>
+                                        <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Context</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        {data.length > 5 && (
-                            <div className="p-3 text-center text-xs text-muted-foreground">
-                                Showing first 5 leads out of {data.length}
-                            </div>
-                        )}
-                    </div>
+                                </thead>
+                                <tbody className="divide-y divide-border/50">
+                                    {data.slice(0, 5).map((row, i) => (
+                                        <tr key={i} className="hover:bg-primary/[0.02] transition-colors">
+                                            <td className="px-6 py-4 font-medium text-heading">{row.name}</td>
+                                            <td className="px-6 py-4 text-muted-foreground">{row.email}</td>
+                                            <td className="px-6 py-4 font-medium text-heading">{row.company}</td>
+                                            <td className="px-6 py-4 text-muted-foreground capitalize">{row.campaign_type}</td>
+                                            <td className="px-6 py-4 max-w-xs truncate text-[11px] text-muted-foreground">{row.context}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </Card>
                 </div>
             )}
         </div>

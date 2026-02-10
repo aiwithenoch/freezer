@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MOCK_LEADS, LeadStatus } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Search, Filter, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -59,37 +60,37 @@ export default function LeadsPage() {
                 </div>
             </div>
 
-            <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <Card className="p-0 overflow-hidden shadow-subtle border-border/50">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
-                        <thead className="bg-muted/50 border-b">
+                        <thead className="bg-muted/30 border-b border-border/50">
                             <tr>
-                                <th className="px-6 py-4 font-bold">Name</th>
-                                <th className="px-6 py-4 font-bold">Company</th>
-                                <th className="px-6 py-4 font-bold">Status</th>
-                                <th className="px-6 py-4 font-bold">Campaign</th>
-                                <th className="px-6 py-4 font-bold">Last Contact</th>
-                                <th className="px-6 py-4 font-bold text-right">Actions</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Name</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Company</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Status</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Campaign</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider">Last Contact</th>
+                                <th className="px-6 py-4 font-bold text-heading text-xs uppercase tracking-wider text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y">
+                        <tbody className="divide-y divide-border/50">
                             {filteredLeads.map((lead) => (
-                                <tr key={lead.id} className="hover:bg-muted/30 transition-colors">
+                                <tr key={lead.id} className="hover:bg-primary/[0.02] transition-colors group">
                                     <td className="px-6 py-4">
                                         <div className="flex flex-col">
-                                            <span className="font-bold">{lead.name}</span>
-                                            <span className="text-xs text-muted-foreground">{lead.email}</span>
+                                            <span className="font-bold text-heading group-hover:text-primary transition-colors">{lead.name}</span>
+                                            <span className="text-[10px] font-bold text-muted-foreground uppercase">{lead.email}</span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 font-medium">{lead.company}</td>
+                                    <td className="px-6 py-4 font-medium text-heading">{lead.company}</td>
                                     <td className="px-6 py-4">
                                         <Badge variant={lead.status}>{lead.status}</Badge>
                                     </td>
-                                    <td className="px-6 py-4 capitalize">{lead.campaign_type}</td>
-                                    <td className="px-6 py-4">{lead.last_sent}</td>
+                                    <td className="px-6 py-4 capitalize text-muted-foreground">{lead.campaign_type}</td>
+                                    <td className="px-6 py-4 text-muted-foreground font-medium">{lead.last_sent}</td>
                                     <td className="px-6 py-4 text-right">
                                         <Link href={`/leads/${lead.id}`}>
-                                            <Button variant="ghost" size="icon">
+                                            <Button variant="ghost" size="icon" className="hover:bg-primary/10 hover:text-primary transition-all">
                                                 <Eye className="h-4 w-4" />
                                             </Button>
                                         </Link>
@@ -99,20 +100,20 @@ export default function LeadsPage() {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex items-center justify-between border-t px-6 py-4 bg-muted/20">
-                    <p className="text-xs text-muted-foreground">
-                        Showing <span className="font-bold">{filteredLeads.length}</span> of <span className="font-bold">{MOCK_LEADS.length}</span> leads
+                <div className="flex items-center justify-between border-t border-border/50 px-6 py-4 bg-muted/10">
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                        Showing <span className="text-primary">{filteredLeads.length}</span> of <span className="text-primary">{MOCK_LEADS.length}</span> leads
                     </p>
                     <div className="flex items-center gap-2">
-                        <Button variant="outline" size="icon" className="h-8 w-8 disabled:opacity-50" disabled>
+                        <Button variant="outline" size="icon" className="h-8 w-8 disabled:opacity-30 border-border/50" disabled>
                             <ChevronLeft className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="icon" className="h-8 w-8 disabled:opacity-50" disabled>
+                        <Button variant="outline" size="icon" className="h-8 w-8 disabled:opacity-30 border-border/50" disabled>
                             <ChevronRight className="h-4 w-4" />
                         </Button>
                     </div>
                 </div>
-            </div>
+            </Card>
         </div>
     );
 }
