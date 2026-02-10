@@ -1,11 +1,16 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
+import { motion } from "framer-motion";
 
 export const Card = React.memo(({ className, children }: { className?: string; children: React.ReactNode }) => {
     return (
-        <div className={cn("bg-card text-card-foreground rounded-2xl p-6 border border-border shadow-subtle transition-all hover:shadow-md", className)}>
+        <motion.div
+            whileHover={{ scale: 1.01, translateY: -2 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className={cn("bg-card text-card-foreground rounded-2xl p-6 border border-border shadow-subtle transition-all hover:shadow-blue-glow hover:border-primary/20", className)}
+        >
             {children}
-        </div>
+        </motion.div>
     );
 });
 

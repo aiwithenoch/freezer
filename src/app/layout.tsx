@@ -7,8 +7,8 @@ import { Navbar } from "@/components/layout/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "FREEZER | AI Cold Email Automation",
-    description: "Automate your cold email outreach with Riverside AI.",
+    title: "FREEZER | Powerful Cold Email Automation",
+    description: "Automate your cold email outreach with high-precision data tools.",
 };
 
 export default function RootLayout({

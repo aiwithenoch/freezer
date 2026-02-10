@@ -18,7 +18,7 @@ import Link from "next/link";
 
 export default function SequenceBuilderPage() {
     const steps = [
-        { id: 1, type: "email", title: "Intro: AI Personalized", delay: "Immediate", prompt: "Write a short 2-sentence intro based on {{context}}." },
+        { id: 1, type: "email", title: "Intro: High-Precision", delay: "Immediate", prompt: "Write a short 2-sentence intro based on {{context}}." },
         { id: 2, type: "wait", delay: "2 Days" },
         { id: 3, type: "email", title: "Follow-up: Case Study", delay: "Day 3", prompt: "Reference our results with Acme corp." },
         { id: 4, type: "wait", delay: "3 Days" },
@@ -72,7 +72,7 @@ export default function SequenceBuilderPage() {
                                     <div className="bg-muted/10 rounded-xl p-4 border border-border/50">
                                         <div className="flex items-center gap-2 mb-2 text-primary">
                                             <Brain className="h-3 w-3" />
-                                            <span className="text-[10px] font-black uppercase tracking-widest">AI Prompt</span>
+                                            <span className="text-[10px] font-black uppercase tracking-widest">Script Optimization</span>
                                         </div>
                                         <p className="text-sm font-medium text-muted-foreground italic">"{step.prompt}"</p>
                                     </div>
@@ -104,11 +104,11 @@ export default function SequenceBuilderPage() {
                         <h3 className="mb-6 font-bold text-heading uppercase tracking-wider text-sm">Sequence Settings</h3>
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">AI Voice Model</label>
+                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Optimization Engine</label>
                                 <select className="w-full rounded-xl border border-border/50 bg-white px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary/20">
-                                    <option>GPT-4o (Premium)</option>
-                                    <option>Claude 3.5 Sonnet</option>
-                                    <option>DeepSeek-V3 (Balanced)</option>
+                                    <option>Engine V4 (Premium)</option>
+                                    <option>High-Frequency Analysis</option>
+                                    <option>Deep-Scan Optimization</option>
                                 </select>
                             </div>
                             <div className="space-y-2">
@@ -131,7 +131,7 @@ export default function SequenceBuilderPage() {
                         <div className="flex items-start gap-3">
                             <Brain className="h-5 w-5 text-warning" />
                             <div>
-                                <h4 className="font-bold text-heading text-sm">AI Advice</h4>
+                                <h4 className="font-bold text-heading text-sm">Smart Advice</h4>
                                 <p className="text-[11px] text-muted-foreground font-medium mt-1 leading-relaxed">
                                     Your 3rd follow-up is too aggressive. Try focusing on the "Acme Case Study" to increase reply rates by ~22%.
                                 </p>

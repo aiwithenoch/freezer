@@ -58,7 +58,7 @@ export default function InboxPage() {
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-success/10 text-success text-[10px] font-black uppercase tracking-widest border border-success/20">
                         <Zap className="h-3 w-3" />
-                        AI Auto-tagging Active
+                        Automated Tagging Active
                     </div>
                 </div>
             </div>
@@ -128,11 +128,11 @@ export default function InboxPage() {
                             </div>
                         </div>
 
-                        {/* AI Suggestion */}
+                        {/* Intelligent Script Suggestion */}
                         <div className="flex flex-col items-end gap-3">
                             <div className="flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest">
                                 <Brain className="h-4 w-4" />
-                                AI Suggested Reply
+                                Smart Script Suggestion
                             </div>
                             <div className="p-6 rounded-2xl bg-primary text-white shadow-blue-glow max-w-[80%] relative">
                                 <p className="text-sm font-bold leading-relaxed italic opacity-90">
