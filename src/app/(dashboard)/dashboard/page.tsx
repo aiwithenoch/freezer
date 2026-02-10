@@ -1,6 +1,6 @@
 "use client";
 
-import { StatCard } from "@/components/ui/card";
+import { Card, StatCard } from "@/components/ui/card";
 import { Users, Mail, Target, MessageSquare, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
