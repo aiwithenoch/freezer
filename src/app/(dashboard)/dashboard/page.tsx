@@ -55,7 +55,7 @@ export default function DashboardPage() {
                         <Mail className="h-8 w-8" />
                     </div>
                     <h2 className="text-xl font-bold">No data yet</h2>
-                    <p className="mb-6 text-muted-foreground">Upload your first batch of leads to get started with AI outreach.</p>
+                    <p className="mb-6 text-muted-foreground">Upload your first batch of leads to get started with high-precision outreach.</p>
                     <Link href="/upload">
                         <Button variant="outline">Upload your first batch</Button>
                     </Link>
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                             {[
                                 { text: "John Doe replied to Campaign Q1", time: "2m ago", type: "reply" },
                                 { text: "50 leads imported for Website Build", time: "4h ago", type: "import" },
-                                { text: "Email sequence finished for Sarah Smith", time: "1d ago", type: "finished" },
+                                { text: "Automation engine identified a new lead for Sarah Smith", time: "1d ago", type: "finished" },
                             ].map((activity, i) => (
                                 <motion.div key={i} variants={item} className="flex gap-4 text-sm group cursor-default">
                                     <div className="h-2 w-2 mt-1.5 rounded-full bg-primary shadow-blue-glow ring-4 ring-primary/5" />

@@ -132,9 +132,9 @@ export default function LeadDetailPage() {
                     </Card>
 
                     <Card>
-                        <h3 className="mb-4 font-bold">AI Notes</h3>
+                        <h3 className="mb-4 font-bold">Automation Insights</h3>
                         <p className="text-sm text-muted-foreground">
-                            Lead just received Series A funding. AI will emphasize scalability and
+                            Lead just received Series A funding. The engine will emphasize scalability and
                             infrastructure in the next email follow-up.
                         </p>
                     </Card>

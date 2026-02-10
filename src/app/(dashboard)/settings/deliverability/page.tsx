@@ -3,136 +3,115 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-    ShieldCheck,
-    Zap,
-    AlertTriangle,
-    Globe,
-    Mail,
-    Activity,
-    Lock,
-    Search
-} from "lucide-react";
+import { ShieldCheck, Activity, Globe, CheckCircle2, AlertTriangle, Zap, Server } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function DeliverabilityPage() {
     return (
         <div className="flex flex-col gap-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-heading">Deliverability Shield</h1>
-                    <p className="text-muted-foreground font-medium">Protect your sender reputation and ensure 100% inbox placement.</p>
+                    <h1 className="text-3xl font-black tracking-tight text-heading uppercase">Deliverability Shield</h1>
+                    <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Medical-grade domain health monitoring and warm-up.</p>
                 </div>
                 <div className="flex gap-2">
-                    <Badge className="bg-success text-white px-4 py-1.5 shadow-lg shadow-success/20 animate-pulse">
-                        Domain Healthy
-                    </Badge>
+                    <div className="flex items-center gap-2 rounded-full bg-success/10 px-4 py-2 text-xs font-black text-success uppercase tracking-widest border border-success/20">
+                        <CheckCircle2 className="h-3 w-3" />
+                        Domain Secured
+                    </div>
                 </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-3">
                 {[
-                    { label: "Sender Score", value: "98/100", icon: ShieldCheck, color: "text-success", bg: "bg-success/5" },
-                    { label: "Inbox Placement", value: "99.2%", icon: Target, color: "text-primary", bg: "bg-primary/5" },
-                    { label: "Spam Reports", value: "0.02%", icon: AlertTriangle, color: "text-warning", bg: "bg-warning/5" },
-                    { label: "DMARC/SPF", value: "Active", icon: Lock, color: "text-success", bg: "bg-success/5" },
+                    { label: "Sender Score", value: "98/100", icon: ShieldCheck, color: "text-primary", bg: "bg-primary/5" },
+                    { label: "Inbox Placement", value: "99.2%", icon: Globe, color: "text-success", bg: "bg-success/5" },
+                    { label: "Blacklist Status", value: "Clean", icon: Server, color: "text-primary", bg: "bg-primary/5" },
                 ].map((stat, i) => (
-                    <Card key={i} className="flex flex-col gap-2 border-l-4 border-primary shadow-subtle">
-                        <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{stat.label}</span>
-                            <div className={`rounded-full ${stat.bg} p-2 ${stat.color}`}>
-                                <stat.icon className="h-4 w-4" />
-                            </div>
+                    <Card key={i} className="flex flex-col items-center justify-center py-10 text-center">
+                        <div className={`mb-4 flex h-16 w-16 items-center justify-center rounded-2xl ${stat.bg} ${stat.color}`}>
+                            <stat.icon className="h-8 w-8" />
                         </div>
-                        <span className="text-2xl font-black text-heading">{stat.value}</span>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+                        <h3 className="mt-1 text-3xl font-black text-heading italic uppercase tracking-tighter">{stat.value}</h3>
                     </Card>
                 ))}
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-2">
-                <Card className="shadow-subtle">
-                    <div className="flex items-center justify-between mb-8">
-                        <div>
-                            <h3 className="font-bold text-heading uppercase tracking-wider text-sm">Domain Warm-up</h3>
-                            <p className="text-xs text-muted-foreground font-medium mt-1">Gradually increasing volume to build trust.</p>
-                        </div>
-                        <Activity className="h-6 w-6 text-primary animate-bounce-slow" />
+            <div className="grid gap-6 lg:grid-cols-3">
+                <Card className="lg:col-span-2 space-y-8">
+                    <div className="flex items-center justify-between border-b border-border/50 pb-6">
+                        <h3 className="text-xl font-black text-heading uppercase tracking-tighter italic">Warm-up Protocol</h3>
+                        <Badge variant="active" className="rounded-full">Protocol Active</Badge>
                     </div>
 
-                    <div className="space-y-8">
-                        <div>
-                            <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground mb-3">
-                                <span>Current Phase: Scale-up</span>
-                                <span className="text-primary">64% Progress</span>
+                    <div className="space-y-10">
+                        {[
+                            { day: "Day 12", volume: "24/50 emails", progress: 48, status: "stable" },
+                            { day: "Day 8", volume: "15/50 emails", progress: 30, status: "complete" },
+                            { day: "Day 4", volume: "5/50 emails", progress: 10, status: "complete" },
+                        ].map((day, i) => (
+                            <div key={i} className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`h-2 w-2 rounded-full ${day.status === "stable" ? "bg-primary animate-pulse" : "bg-success"}`} />
+                                        <span className="text-sm font-black text-heading uppercase tracking-widest">{day.day}</span>
+                                    </div>
+                                    <span className="text-[10px] font-black text-muted-foreground uppercase">{day.volume}</span>
+                                </div>
+                                <div className="h-3 w-full overflow-hidden rounded-full bg-muted/50 border border-border/50">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${day.progress}%` }}
+                                        transition={{ duration: 1, ease: "easeOut" }}
+                                        className={`h-full ${day.status === "stable" ? "bg-primary shadow-blue-glow" : "bg-success"}`}
+                                    />
+                                </div>
                             </div>
-                            <div className="h-3 w-full bg-muted/20 rounded-full overflow-hidden border border-border/50">
-                                <div className="h-full bg-primary shadow-blue-glow rounded-full" style={{ width: "64%" }} />
-                            </div>
-                        </div>
+                        ))}
+                    </div>
 
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="p-4 rounded-2xl bg-muted/10 border border-border/50 text-center">
-                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Today's Cap</p>
-                                <p className="text-lg font-black text-heading">500</p>
-                            </div>
-                            <div className="p-4 rounded-2xl bg-muted/10 border border-border/50 text-center">
-                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Sent</p>
-                                <p className="text-lg font-black text-heading text-primary">320</p>
-                            </div>
-                            <div className="p-4 rounded-2xl bg-muted/10 border border-border/50 text-center">
-                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Remaining</p>
-                                <p className="text-lg font-black text-heading">180</p>
-                            </div>
+                    <div className="rounded-2xl bg-muted/20 p-6 border border-border/50 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <Activity className="h-5 w-5 text-primary" />
+                            <p className="text-xs font-bold text-muted-foreground leading-relaxed">
+                                Our <span className="text-heading">High-Precision Engine</span> is currently rotating through 48 clean IP addresses to maintain your sender reputation.
+                            </p>
                         </div>
-
-                        <Button className="w-full shadow-blue-glow font-black text-xs uppercase tracking-widest py-6">
-                            Adjust Warm-up Speed
-                        </Button>
+                        <Button variant="ghost" className="text-primary font-black uppercase text-[10px] tracking-widest">View Engine Logs</Button>
                     </div>
                 </Card>
 
-                <Card className="shadow-subtle">
-                    <h3 className="mb-6 font-bold text-heading uppercase tracking-wider text-sm">Spam Trigger Scanner</h3>
-                    <div className="space-y-4">
-                        <div className="relative">
-                            <Search className="absolute left-4 top-4 h-4 w-4 text-muted-foreground" />
-                            <textarea
-                                placeholder="Paste your email copy here to scan for spam triggers..."
-                                className="w-full h-48 rounded-2xl border-border/50 bg-muted/5 p-4 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                            />
+                <Card className="space-y-8 bg-heading text-white shadow-2xl">
+                    <div className="flex items-center gap-3 border-b border-white/10 pb-6">
+                        <div className="p-3 bg-white/10 rounded-xl text-primary">
+                            <Zap className="h-5 w-5" />
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                            <Badge variant="cold" className="bg-destructive/10 text-destructive border-destructive/20 text-[10px] uppercase">"Free"</Badge>
-                            <Badge variant="cold" className="bg-destructive/10 text-destructive border-destructive/20 text-[10px] uppercase">"Click here"</Badge>
-                            <Badge variant="cold" className="bg-destructive/10 text-destructive border-destructive/20 text-[10px] uppercase">"Money"</Badge>
-                            <Badge variant="cold" className="bg-destructive/10 text-destructive border-destructive/20 text-[10px] uppercase">"Guaranteed"</Badge>
+                        <h3 className="text-xl font-black uppercase tracking-tighter italic">Deep Scan</h3>
+                    </div>
+
+                    <div className="space-y-6">
+                        <p className="text-xs font-bold text-white/70 leading-relaxed uppercase tracking-wide">
+                            The system scans every sequence for "Spam Triggers" before execution.
+                        </p>
+                        <div className="space-y-4">
+                            {[
+                                { label: "SPF / DKIM / DMARC", status: "Secure", color: "text-success" },
+                                { label: "Domain Age", status: "2.4 Years", color: "text-white" },
+                                { label: "IP Reputation", status: "High", color: "text-success" },
+                            ].map((check, i) => (
+                                <div key={i} className="flex items-center justify-between border-b border-white/5 pb-4 last:border-0">
+                                    <span className="text-[10px] font-black uppercase tracking-widest opacity-60">{check.label}</span>
+                                    <span className={`text-[10px] font-black uppercase tracking-widest ${check.color}`}>{check.status}</span>
+                                </div>
+                            ))}
                         </div>
-                        <Button variant="outline" className="w-full font-black text-xs uppercase tracking-widest py-6 border-border/50">
-                            Scan Copy for Risk
+                        <Button className="w-full bg-white text-heading hover:bg-white/90 font-black uppercase tracking-widest py-6 h-auto">
+                            Run Global Audit
                         </Button>
                     </div>
                 </Card>
             </div>
         </div>
     );
-}
-
-function Target(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <circle cx="12" cy="12" r="10" />
-            <circle cx="12" cy="12" r="6" />
-            <circle cx="12" cy="12" r="2" />
-        </svg>
-    )
 }
