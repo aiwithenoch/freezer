@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Upload, Download, FileText, CheckCircle2, AlertCircle } from "lucide-react";
+import { Upload, Download, FileText, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import Papa from "papaparse";
-import { toast } from "sonner"; // Assuming sonner is installed
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function UploadPage() {
-    const [data, setData] = useState<any[]>([]);
-    const [fileName, setFileName] = useState<string>("");
+    const [isImporting, setIsImporting] = useState(false);
+    const router = useRouter();
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -29,11 +30,25 @@ export default function UploadPage() {
         });
     };
 
-    const handleImport = () => {
-        // Show a success toast/alert
-        toast.success("Leads imported successfully!");
-        setData([]);
-        setFileName("");
+    const handleImport = async () => {
+        setIsImporting(true);
+        try {
+            // Batch import (for simplicity, we iterate, but the API could be optimized)
+            for (const lead of data) {
+                await fetch("/api/leads", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(lead)
+                });
+            }
+            toast.success("Leads imported successfully!");
+            router.push("/leads");
+        } catch (error) {
+            console.error("Import failed:", error);
+            toast.error("Import failed. Please try again.");
+        } finally {
+            setIsImporting(false);
+        }
     };
 
     return (
@@ -93,8 +108,9 @@ export default function UploadPage() {
                             Preview: {fileName}
                             <span className="text-sm font-normal text-muted-foreground">({data.length} leads detected)</span>
                         </h2>
-                        <Button onClick={handleImport} className="gap-2 shadow-blue-glow">
-                            <CheckCircle2 className="h-4 w-4" /> Import {data.length} Leads
+                        <Button onClick={handleImport} className="gap-2 shadow-blue-glow" disabled={isImporting}>
+                            {isImporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
+                            {isImporting ? "Importing..." : `Import ${data.length} Leads`}
                         </Button>
                     </div>
                     <Card className="p-0 overflow-hidden shadow-subtle border-border/50">

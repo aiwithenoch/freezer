@@ -23,10 +23,10 @@ export function Navbar() {
 
                 <div className="flex items-center gap-4">
                     <Link href="/signin">
-                        <Button variant="ghost" className="font-bold text-muted-foreground hover:text-heading transition-colors">Sign In</Button>
+                        <Button variant="ghost" className="font-black text-muted-foreground hover:text-heading transition-colors font-sans uppercase text-[10px] tracking-widest">Sign In</Button>
                     </Link>
                     <Link href="/signup">
-                        <Button className="font-bold shadow-blue-glow px-6">Get Started</Button>
+                        <Button className="font-black shadow-blue-glow px-8 font-sans uppercase text-[10px] tracking-widest">Get Started</Button>
                     </Link>
                 </div>
             </div>

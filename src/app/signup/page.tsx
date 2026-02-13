@@ -6,13 +6,38 @@ import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
+
 export default function SignUpPage() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm();
     const router = useRouter();
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-        router.push("/dashboard");
+    const onSubmit = async (data: any) => {
+        if (data.password !== data.confirmPassword) {
+            toast.error("Passwords do not match");
+            return;
+        }
+
+        try {
+            const { error } = await supabase.auth.signUp({
+                email: data.email,
+                password: data.password,
+                options: {
+                    data: {
+                        full_name: data.fullName,
+                        company: data.company,
+                    },
+                },
+            });
+
+            if (error) throw error;
+
+            toast.success("Account created! Please check your email for verification.");
+            router.push("/signin");
+        } catch (error: any) {
+            toast.error(error.message || "Failed to create account");
+        }
     };
 
     return (

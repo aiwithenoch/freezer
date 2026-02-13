@@ -69,8 +69,18 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground font-serif;
+    font-feature-settings: "rlig" 1, "calt" 1, "kern" 1;
+  }
+}
+
+@layer utilities {
+  .font-sans {
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif), Georgia, serif;
   }
 }
 

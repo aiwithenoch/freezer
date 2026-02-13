@@ -6,13 +6,28 @@ import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
+
 export default function SignInPage() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm();
     const router = useRouter();
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-        router.push("/dashboard");
+    const onSubmit = async (data: any) => {
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email: data.email,
+                password: data.password,
+            });
+
+            if (error) throw error;
+
+            toast.success("Signed in successfully");
+            router.push("/dashboard");
+            router.refresh();
+        } catch (error: any) {
+            toast.error(error.message || "Failed to sign in");
+        }
     };
 
     return (

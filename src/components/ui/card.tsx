@@ -26,17 +26,17 @@ export function StatCard({ title, value, icon: Icon, description, trend }: {
     return (
         <Card className="flex flex-col gap-2 border-l-4 border-l-primary">
             <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{title}</span>
+                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] font-sans">{title}</span>
                 <div className="rounded-full bg-primary/5 p-2 text-primary">
                     <Icon className="h-5 w-5" />
                 </div>
             </div>
             <div className="flex flex-col">
-                <span className="text-3xl font-bold tracking-tight text-heading">{value}</span>
+                <span className="text-3xl font-black tracking-tighter text-heading font-sans italic">{value}</span>
                 {(description || trend) && (
                     <div className="flex items-center gap-1 mt-1">
-                        {trend && <span className="text-xs font-bold text-success">{trend}</span>}
-                        <span className="text-[11px] font-medium text-muted-foreground">{description}</span>
+                        {trend && <span className="text-xs font-black text-success font-sans">{trend}</span>}
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">{description}</span>
                     </div>
                 )}
             </div>

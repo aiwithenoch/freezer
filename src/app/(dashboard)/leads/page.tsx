@@ -1,22 +1,44 @@
 "use client";
 
-import { useState } from "react";
-import { MOCK_LEADS, LeadStatus } from "@/lib/mock-data";
+import { useState, useEffect } from "react";
+import { type Lead, type LeadStatus } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Search, Filter, Eye, ChevronLeft, ChevronRight, Download } from "lucide-react";
+import { Search, Filter, Eye, ChevronLeft, ChevronRight, Download, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function LeadsPage() {
+    const [leads, setLeads] = useState<Lead[]>([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all");
 
-    const filteredLeads = MOCK_LEADS.filter(lead => {
-        const matchesSearch = lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            lead.company.toLowerCase().includes(searchTerm.toLowerCase());
+    useEffect(() => {
+        const fetchLeads = async () => {
+            try {
+                const response = await fetch("/api/leads");
+                const data = await response.json();
+                setLeads(data);
+            } catch (error) {
+                console.error("Failed to fetch leads:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLeads();
+    }, []);
+
+    const filteredLeads = (leads || []).filter(lead => {
+        const name = lead.name || "";
+        const email = lead.email || "";
+        const company = lead.company || "";
+
+        const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            company.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === "all" || lead.status === statusFilter;
         return matchesSearch && matchesStatus;
     });
@@ -76,45 +98,67 @@ export default function LeadsPage() {
                         </thead>
                         <tbody className="divide-y divide-border/50 font-bold text-heading">
                             <AnimatePresence>
-                                {filteredLeads.map((lead) => (
-                                    <motion.tr
-                                        key={lead.id}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        className="hover:bg-primary/[0.02] transition-colors group cursor-default"
-                                    >
-                                        <td className="px-8 py-5">
-                                            <div className="flex flex-col">
-                                                <span className="font-black text-heading group-hover:text-primary transition-colors">{lead.name}</span>
-                                                <span className="text-[9px] font-black text-muted-foreground uppercase tracking-tighter">{lead.email}</span>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={4} className="px-8 py-20 text-center">
+                                            <div className="flex flex-col items-center gap-4">
+                                                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Synchronizing Records...</p>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-5">
-                                            <div className="flex flex-col">
-                                                <span className="text-sm">{lead.company}</span>
-                                                <span className="text-[9px] font-black text-muted-foreground uppercase opacity-50 tracking-tighter">{lead.campaign_type} Automation</span>
+                                    </tr>
+                                ) : filteredLeads.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={4} className="px-8 py-20 text-center">
+                                            <div className="flex flex-col items-center gap-4">
+                                                <div className="h-12 w-12 rounded-2xl bg-muted flex items-center justify-center">
+                                                    <Search className="h-6 w-6 text-muted-foreground" />
+                                                </div>
+                                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">No active leads found in this sector.</p>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-5">
-                                            <Badge variant={lead.status}>{lead.status}</Badge>
-                                        </td>
-                                        <td className="px-8 py-5 text-right">
-                                            <Link href={`/leads/${lead.id}`}>
-                                                <Button variant="ghost" size="icon" className="hover:bg-primary/10 hover:text-primary transition-all rounded-xl h-10 w-10">
-                                                    <Eye className="h-4 w-4" />
-                                                </Button>
-                                            </Link>
-                                        </td>
-                                    </motion.tr>
-                                ))}
+                                    </tr>
+                                ) : (
+                                    filteredLeads.map((lead) => (
+                                        <motion.tr
+                                            key={lead.id}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            className="hover:bg-primary/[0.02] transition-colors group cursor-default"
+                                        >
+                                            <td className="px-8 py-5">
+                                                <div className="flex flex-col">
+                                                    <span className="font-black text-heading group-hover:text-primary transition-colors">{lead.name}</span>
+                                                    <span className="text-[9px] font-black text-muted-foreground uppercase tracking-tighter">{lead.email}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-8 py-5">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm">{lead.company}</span>
+                                                    <span className="text-[9px] font-black text-muted-foreground uppercase opacity-50 tracking-tighter">{lead.campaign_type} Automation</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-8 py-5">
+                                                <Badge variant={lead.status}>{lead.status}</Badge>
+                                            </td>
+                                            <td className="px-8 py-5 text-right">
+                                                <Link href={`/leads/${lead.id}`}>
+                                                    <Button variant="ghost" size="icon" className="hover:bg-primary/10 hover:text-primary transition-all rounded-xl h-10 w-10">
+                                                        <Eye className="h-4 w-4" />
+                                                    </Button>
+                                                </Link>
+                                            </td>
+                                        </motion.tr>
+                                    ))
+                                )}
                             </AnimatePresence>
                         </tbody>
                     </table>
                 </div>
                 <div className="flex items-center justify-between border-t border-border/50 px-8 py-6 bg-muted/10">
                     <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-                        Orchestrating <span className="text-primary">{filteredLeads.length}</span> / <span className="text-primary">{MOCK_LEADS.length}</span> Pipeline Units
+                        Orchestrating <span className="text-primary">{filteredLeads.length}</span> / <span className="text-primary">{leads?.length || 0}</span> Pipeline Units
                     </p>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" size="icon" className="h-10 w-10 disabled:opacity-30 border-border/50 bg-white" disabled>

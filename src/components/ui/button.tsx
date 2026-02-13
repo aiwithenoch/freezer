@@ -28,7 +28,7 @@ export function Button({ className, variant = "primary", size = "md", ...props }
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 500, damping: 15 }}
             className={cn(
-                "inline-flex items-center justify-center rounded-xl font-bold transition-colors disabled:opacity-50 disabled:pointer-events-none",
+                "inline-flex items-center justify-center rounded-xl font-bold transition-colors disabled:opacity-50 disabled:pointer-events-none font-sans",
                 variants[variant],
                 sizes[size],
                 className

@@ -1,43 +1,49 @@
 "use client";
 
-import { Card, StatCard } from "@/components/ui/card";
-import { Users, Mail, Target, MessageSquare, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { motion } from "framer-motion";
-
-const container = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            type: "spring",
-            stiffness: 300,
-            damping: 24
-        }
-    }
-};
+import { useState, useEffect } from "react";
+import { type Lead, type Campaign } from "@/lib/mock-data";
 
 export default function DashboardPage() {
+    const [leads, setLeads] = useState<Lead[]>([]);
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const [leadsRes, campaignsRes] = await Promise.all([
+                    fetch("/api/leads"),
+                    fetch("/api/campaigns")
+                ]);
+                const [leadsData, campaignsData] = await Promise.all([
+                    leadsRes.json(),
+                    campaignsRes.json()
+                ]);
+                setLeads(leadsData);
+                setCampaigns(campaignsData);
+            } catch (error) {
+                console.error("Failed to fetch dashboard stats:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, []);
+
+    const totalLeads = leads?.length || 0;
+    const activeCampaigns = campaigns?.length || 0;
+    const qualifiedLeads = leads?.filter(l => l.status === "qualified").length || 0;
+    const replyRate = totalLeads > 0 ? ((leads?.filter(l => l.status === "interested" || l.status === "qualified").length || 0) / totalLeads * 100).toFixed(1) : "0";
+
     const stats = [
-        { title: "Total Leads", value: "2,482", icon: Users, description: "Total leads in database", trend: "+12%" },
-        { title: "Active Sequences", value: "45", icon: Mail, description: "Sequences currently running", trend: "+5%" },
-        { title: "Qualified Leads", value: "128", icon: Target, description: "Leads that booked a call", trend: "+18%" },
-        { title: "Reply Rate", value: "24.5%", icon: MessageSquare, description: "Average reply rate", trend: "+2%" },
+        { title: "Total Leads", value: totalLeads.toLocaleString(), icon: Users, description: "Total leads in database", trend: "Live" },
+        { title: "Active Sequences", value: activeCampaigns.toString(), icon: Mail, description: "Sequences currently running", trend: "Live" },
+        { title: "Qualified Leads", value: qualifiedLeads.toString(), icon: Target, description: "Leads that booked a call", trend: "Live" },
+        { title: "Reply Rate", value: `${replyRate}%`, icon: MessageSquare, description: "Average interest rate", trend: "Live" },
     ];
 
-    const isEmpty = false; // Toggle this to see the empty state
+    const isEmpty = !loading && totalLeads === 0;
 
     if (isEmpty) {
         return (
